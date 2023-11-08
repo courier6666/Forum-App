@@ -1,0 +1,25 @@
+﻿@using ForumWebApp.ViewModels;
+@model CreatedPostViewModel;
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<form method="post" asp-action="Create" enctype="multipart/form-data">
+    <input type="hidden" id="ThreadId" name="ThreadId" asp-for="ThreadId" />
+    <input type = "hidden" id = "AuthorId" name="AuthorId" asp-for="AuthorId"/>
+    <div class="form-group">
+        <label asp-for="Title" >Title</label>
+        <input asp-for="Title" class="form-control" placeholder="Title"></input>
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Content">Content</label>
+        <textarea class="form-control" asp-for="Content" placeholder="Content"></textarea>
+        <span asp-validation-for="Content" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

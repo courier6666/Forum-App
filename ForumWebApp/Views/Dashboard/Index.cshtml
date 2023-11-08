@@ -1,0 +1,90 @@
+﻿@using ForumWebApp.Models
+
+@model AppUser
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<h1 class="display-4 fw-normal">User Dashboard</h1>
+<a type="button" class="btn btn-primary" asp-area="" asp-controller="Dashboard" asp-action="EditUserProfile">Edit User Profile</a>
+<h2>My posts</h2>
+<div class="container">
+    @foreach (var post in Model.Posts)
+    {
+        <div class="row">
+            <!-- End of post 1 -->
+            <div class="card row-hover pos-relative py-3 px-3 mb-3 border-warning border-top-0 border-right-0 border-bottom-0 rounded-0">
+                <div class="row align-items-center">
+                    <div class="col-md-8 mb-3 mb-sm-0">
+                        <h5>
+                            <a class="text-primary" asp-controller="ThreadPost" asp-action="Detail" asp-route-threadId="@post.ThreadId" asp-route-postId="@post.Id">@post.Title</a>
+                        </h5>
+                        <p class="text-sm"><span class="op-6">Posted</span> <a class="text-black dateTimeLabel" href="#" data-date-diff="@((DateTime.UtcNow - post.CreateAtUtc).TotalMilliseconds)"></a> <span class="op-6">ago by</span> <a class="text-black" href="#">@post.Author?.UserName</a></p>
+                    </div>
+                </div>
+            </div>
+            <!-- /End of post 1 -->
+        </div>
+    }
+</div>
+<script>
+    function formatDateOfCreation(milliseconds) {
+        millisecondsInt = parseInt(milliseconds);
+
+        let date = new Date(millisecondsInt);
+
+        let years = date.getFullYear() - 1970;
+
+        if (years > 0) {
+            let result = years.toString() + " year";
+            if (years > 1) result = result + "s";
+            return result;
+        }
+
+        let totalSeconds = parseInt(millisecondsInt / 1000, 10);
+        let minutes = parseInt(totalSeconds / 60, 10);
+        let hours = parseInt(minutes / 60, 10);
+        let days = parseInt(hours / 24, 10);
+        let weeks = parseInt(days / 7, 10);
+        let months = parseInt(days / 30, 10);
+
+        if (months > 0) {
+            let result = months.toString() + " month";
+            if (months > 1) result = result + "s";
+            return result;
+        }
+        if (weeks > 0) {
+            let result = weeks.toString() + " week";
+            if (weeks > 1) result = result + "s";
+            return result;
+        }
+        if (days > 0) {
+            let result = days.toString() + " day";
+            if (days > 1) result = result + "s";
+            return result;
+        }
+        if (hours > 0) {
+            let result = hours.toString() + " hour";
+            if (hours > 1) result = result + "s";
+            return result;
+        }
+        if (minutes > 0) {
+            let result = minutes.toString() + " minute";
+            if (minutes > 1) result = result + "s";
+            return result;
+        }
+
+        let result = totalSeconds.toString() + " second";
+        if (totalSeconds > 1) result = result + "s";
+        return result;
+    }
+    var dateTimeElements = document.getElementsByClassName("dateTimeLabel");
+    for (let i = 0; i < dateTimeElements.length; ++i) {
+
+        dateTimeElements[i].textContent = formatDateOfCreation(dateTimeElements[i].getAttribute("data-date-diff"));
+    }
+
+</script>

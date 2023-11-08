@@ -1,0 +1,76 @@
+﻿@using ForumWebApp.Data.Enums;
+@using ForumWebApp.ViewModels;
+@model PostDetailViewModel;
+@using System;
+@using System.Text.Json;
+@using System.Text.Json.Serialization;
+@using static ForumWebApp.Extensions.JsonExtension;
+@using ForumWebApp.Extensions;
+@using Microsoft.AspNetCore.Mvc;
+@using Microsoft.AspNetCore.Http;
+@using ForumWebApp.Extensions;
+
+@{
+    ViewData["Title"] = "Thread Post";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="~/css/postThread.css">
+</head>
+
+<body>
+    <div class="row mt-5">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header">
+                    <h4>@Model.Post.Title</h4>
+                </div>
+                <div class="card-body">
+                    <p>@Model.Post.Content</p>
+                </div>
+                @if (Model.HttpContextAccessor.HttpContext?.User.GetUserId() != null)
+                {
+                    <div id = "postButtonsDiv">
+                        <a class = "commentManageButton" id="commentLink">Comment</a>
+                        <div id="commentForm" style="display: none;">
+                            <input type="text" placeholder="Type your comment" />
+                            <button onclick="submitCommentForPost()">Submit</button>
+                        </div>
+                        <div id="votesOfPostDiv" class="voteFields">
+                            <label class="upvotesCount" id="upvotesPostCount">
+                                @Model.Post.GetVotesOfType(VoteType.UpVote).Count
+                            </label>
+                            <button class="upvoteButton" id="upvotePostButton" onclick="UpvoteClickForPost()">
+                                Upvote
+                            </button>
+                            <label class="downvotesCount" id="downvotesPostCount">
+                                @Model.Post.GetVotesOfType(VoteType.DownVote).Count
+                            </label>
+                            <button class="downvoteButton" id="downvotePostButton" onclick="DownvoteClickForPost()">
+                                Downvote
+                            </button>
+                        </div>
+                    </div>
+                }
+            </div>
+    
+            <div id="commentsContainer">
+    
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        const commentsData = @Html.Raw(CommentsToJson(Model.Post.Comments));
+        const globalCommentsContainer = document.getElementById("commentsContainer");
+        const userLoggedIn = @Json.Serialize(Model.HttpContextAccessor.HttpContext?.User.GetUserId() != null);
+        const userId = @Json.Serialize(Model.HttpContextAccessor.HttpContext?.User.GetUserId());
+        const IdPost = @Model.Post.Id;
+        const hasVotedUser = null;
+    
+    </script>
+    <script type="text/javascript" src="~/js/postThread/post.js"></script>
+</body>
+</html>

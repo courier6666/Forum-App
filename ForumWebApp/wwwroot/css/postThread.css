@@ -1,0 +1,37 @@
+﻿.commentManageButton:hover
+{
+    cursor:pointer
+}
+
+.commentManageButton
+{
+    text-decoration: none
+}
+
+
+.voteFields
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+}
+
+.upvotesCount
+{
+    color: green;
+}
+
+.downvotesCount
+{
+    color: red;
+}
+
+.upvoteButtonActive
+{
+    background-color: green;
+}
+
+.downvoteButtonActive
+{
+    background-color: red;
+}
