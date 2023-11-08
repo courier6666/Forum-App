@@ -403,16 +403,19 @@ function RenderComment(comment, offset, parentCommentHtml) {
         viewRepliesLink.className = "repliesViewLink";
         commentHtml.append(viewRepliesLink);
 
-        repliesHtml = document.createElement("div");
-        repliesHtml.className = "repliesDiv";
-        for (let i = 0; i < comment.Replies.length; ++i) {
-            let htmlReply = RenderComment(comment.Replies[i], offset + 5, commentHtml);
-            repliesHtml.append(htmlReply);
-        }
-
         commentHtml.dataset.repliesCount = comment.Replies.length;
 
         viewRepliesLink.addEventListener("click", function () {
+            if (repliesHtml == null) {
+                repliesHtml = document.createElement("div");
+                repliesHtml.className = "repliesDiv";
+                for (let i = 0; i < comment.Replies.length; ++i) {
+                    let htmlReply = RenderComment(comment.Replies[i], offset + 5, commentHtml);
+                    repliesHtml.append(htmlReply);
+                }
+                repliesHtml.style.display = "block";
+                return;
+            }
             if (repliesHtml.style.display == "none") {
                 repliesHtml.style.display = "block";
             }
@@ -420,7 +423,6 @@ function RenderComment(comment, offset, parentCommentHtml) {
                 repliesHtml.style.display = "none";
             }
         });
-        repliesHtml.style.display = "none";
         commentHtml.append(repliesHtml);
 
     }
@@ -517,7 +519,9 @@ function deleteComment(commentIdArg, commentHtml, parentCommentHtml) {
                     let repliesLink = parentCommentHtml.querySelector(".repliesViewLink");
                     repliesLink.remove();
                     let repliesDiv = parentCommentHtml.querySelector(".repliesDiv");
-                    repliesDiv.remove();
+
+                    if (repliesDiv != null && repliesDiv != undefined)
+                        repliesDiv.remove();
                 }
             },
         error:
