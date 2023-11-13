@@ -33,7 +33,9 @@
                 @if (Model.HttpContextAccessor.HttpContext?.User.GetUserId() != null)
                 {
                     <div id = "postButtonsDiv">
-                        <a class = "commentManageButton" id="commentLink">Comment</a>
+                        <div class="commentManageButtonsField">
+                            <a class = "commentManageButton" id="commentLink">Comment</a>
+                        </div>
                         <div id="commentForm" style="display: none;">
                             <input type="text" placeholder="Type your comment" />
                             <button onclick="submitCommentForPost()">Submit</button>

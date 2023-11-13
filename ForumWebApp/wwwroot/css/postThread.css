@@ -1,11 +1,31 @@
 ﻿.commentManageButton:hover
 {
-    cursor:pointer
+    cursor:pointer;
+    color:black;
 }
 
 .commentManageButton
 {
-    text-decoration: none
+    text-decoration: none;
+    color: gray;
+}
+
+.commentManageButtonsField
+{
+    display: flex;
+    flex-direction: row;
+    margin-left:1%;
+    justify-content: space-between;
+    width: 25%;
+}
+
+.repliesViewLink {
+    text-decoration: none;
+    color: gray;
+}
+
+.repliesViewLink:hover {
+    color: gray
 }
 
 

@@ -305,6 +305,9 @@ function RenderComment(comment, offset, parentCommentHtml) {
         commentFormDiv.append(commentInput);
         commentFormDiv.append(buttonSubmitReply);
 
+        let commentManageButtonsField = document.createElement("div");
+        commentManageButtonsField.className = "commentManageButtonsField";
+
         let commentReply = document.createElement("a");
         commentReply.className = "commentManageButton";
         commentReply.innerText = "Reply";
@@ -317,16 +320,20 @@ function RenderComment(comment, offset, parentCommentHtml) {
             }
         });
 
-        commentHtml.append(commentReply);
-        commentHtml.append(commentFormDiv);
+
+        commentManageButtonsField.append(commentReply);
 
         if (comment.Author.Id == userId) {
             let deleteButton = document.createElement("a");
             deleteButton.className = "commentManageButton";
             deleteButton.innerText = "Delete";
             deleteButton.addEventListener("click", function () { deleteComment(comment.Id, commentHtml, parentCommentHtml) });
-            commentHtml.append(deleteButton);
+            commentManageButtonsField.append(deleteButton);
         }
+
+        commentHtml.append(commentManageButtonsField);
+        commentHtml.append(commentFormDiv);
+
         //votes fields for comment
         let votesOfCommentDiv = document.createElement("div");
         votesOfCommentDiv.className = "voteFields";
@@ -500,13 +507,13 @@ function submitReplyForComment(commentId, commentHtml, offset) {
                                 url: "/Comment/GetCommentReplies",
                                 type: 'POST',
                                 data: {
-                                    commentId: comment.Id
+                                    commentId: commentId
                                 },
                                 success: function (response) {
                                     response = JSON.parse(response);
                                     for (let i = 0; i < response.length; ++i) {
                                         let htmlReply = RenderComment(response[i], offset + 5, commentHtml);
-                                        repliesHtml.append(htmlReply);
+                                        repliesDivHtml.append(htmlReply);
                                     }
                                     repliesDivHtml.style.display = "block";
                                     commentHtml.append(repliesDivHtml);
@@ -526,8 +533,6 @@ function submitReplyForComment(commentId, commentHtml, offset) {
                             repliesDivHtml.style.display = "none";
                         }
                     });
-                    repliesDivHtml.style.display = "block";
-                    commentHtml.append(repliesDivHtml);
                 }
                 else {
                     repliesDivHtml.append(renderedCommentHtml);
