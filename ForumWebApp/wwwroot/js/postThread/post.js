@@ -17,48 +17,53 @@ function UpvoteClickForPost() {
         },
         success:
             function (response) {
-                $.ajax({
-                    url: "/Votes/DeleteVote",
-                    type: 'POST',
-                    data: {
-                        voteDeletedViewModel: { VoteType: upvoteValue, PostId: IdPost }
-                    },
-                    success:
-                        function (response) {
-                            response = JSON.parse(response);
-                            upvoteCountLabel.innerText = response.countUpvotes;
-                            downvoteCountLabel.innerText = response.countDownvotes;
-                            document.getElementById("upvotePostButton").classList.remove("upvoteButtonActive");
+                if (response) {
+                    $.ajax({
+                        url: "/Votes/DeleteVote",
+                        type: 'POST',
+                        data: {
+                            voteDeletedViewModel: { VoteType: upvoteValue, PostId: IdPost }
                         },
-                    error:
-                        function (response) {
-                            alert(response);
-                        }
+                        success:
+                            function (response) {
+                                response = JSON.parse(response);
+                                upvoteCountLabel.innerText = response.countUpvotes;
+                                downvoteCountLabel.innerText = response.countDownvotes;
+                                document.getElementById("upvotePostButton").classList.remove("upvoteButtonActive");
+                            },
+                        error:
+                            function (response) {
+                                alert(response);
+                            }
 
-                });
+                    });
+                }
+                else {
+                    $.ajax({
+                        url: "/Votes/AddVote",
+                        type: 'POST',
+                        data: {
+                            voteAddedViewModel: { VoteType: upvoteValue, PostId: IdPost }
+                        },
+                        success:
+                            function (response) {
+                                response = JSON.parse(response);
+                                upvoteCountLabel.innerText = response.countUpvotes;
+                                downvoteCountLabel.innerText = response.countDownvotes;
+                                document.getElementById("upvotePostButton").classList.add("upvoteButtonActive");
+                                document.getElementById("downvotePostButton").classList.remove("downvoteButtonActive");
+                            },
+                        error:
+                            function (response) {
+                                alert(response);
+                            }
+
+                    });
+                }
             },
         error:
             function (response) {
-                $.ajax({
-                    url: "/Votes/AddVote",
-                    type: 'POST',
-                    data: {
-                        voteAddedViewModel: { VoteType: upvoteValue, PostId: IdPost }
-                    },
-                    success:
-                        function (response) {
-                            response = JSON.parse(response);
-                            upvoteCountLabel.innerText = response.countUpvotes;
-                            downvoteCountLabel.innerText = response.countDownvotes;
-                            document.getElementById("upvotePostButton").classList.add("upvoteButtonActive");
-                            document.getElementById("downvotePostButton").classList.remove("downvoteButtonActive");
-                        },
-                    error:
-                        function (response) {
-                            alert(response);
-                        }
-
-                });
+                alert(response);
             }
     });
 
@@ -77,48 +82,53 @@ function DownvoteClickForPost() {
         },
         success:
             function (response) {
-                $.ajax({
-                    url: "/Votes/DeleteVote",
-                    type: 'POST',
-                    data: {
-                        voteDeletedViewModel: { VoteType: downvoteValue, PostId: IdPost }
-                    },
-                    success:
-                        function (response) {
-                            response = JSON.parse(response);
-                            upvoteCountLabel.innerText = response.countUpvotes;
-                            downvoteCountLabel.innerText = response.countDownvotes;
-                            document.getElementById("downvotePostButton").classList.remove("downvoteButtonActive");
+                if (response) {
+                    $.ajax({
+                        url: "/Votes/DeleteVote",
+                        type: 'POST',
+                        data: {
+                            voteDeletedViewModel: { VoteType: downvoteValue, PostId: IdPost }
                         },
-                    error:
-                        function (response) {
-                            alert(response);
-                        }
+                        success:
+                            function (response) {
+                                response = JSON.parse(response);
+                                upvoteCountLabel.innerText = response.countUpvotes;
+                                downvoteCountLabel.innerText = response.countDownvotes;
+                                document.getElementById("downvotePostButton").classList.remove("downvoteButtonActive");
+                            },
+                        error:
+                            function (response) {
+                                alert(response);
+                            }
 
-                });
+                    });
+                }
+                else {
+                    $.ajax({
+                        url: "/Votes/AddVote",
+                        type: 'POST',
+                        data: {
+                            voteAddedViewModel: { VoteType: downvoteValue, PostId: IdPost }
+                        },
+                        success:
+                            function (response) {
+                                response = JSON.parse(response);
+                                upvoteCountLabel.innerText = response.countUpvotes;
+                                downvoteCountLabel.innerText = response.countDownvotes;
+                                document.getElementById("downvotePostButton").classList.add("downvoteButtonActive");
+                                document.getElementById("upvotePostButton").classList.remove("upvoteButtonActive");
+                            },
+                        error:
+                            function (response) {
+                                alert(response);
+                            }
+
+                    });
+                }
             },
         error:
             function (response) {
-                $.ajax({
-                    url: "/Votes/AddVote",
-                    type: 'POST',
-                    data: {
-                        voteAddedViewModel: { VoteType: downvoteValue, PostId: IdPost }
-                    },
-                    success:
-                        function (response) {
-                            response = JSON.parse(response);
-                            upvoteCountLabel.innerText = response.countUpvotes;
-                            downvoteCountLabel.innerText = response.countDownvotes;
-                            document.getElementById("downvotePostButton").classList.add("downvoteButtonActive");
-                            document.getElementById("upvotePostButton").classList.remove("upvoteButtonActive");
-                        },
-                    error:
-                        function (response) {
-                            alert(response);
-                        }
-
-                });
+                alert(response);
             }
     });
 }
@@ -132,48 +142,53 @@ function UpvoteClickForComment(upvoteCountLabel, downvoteCountLabel, commentId) 
         },
         success:
             function (response) {
-                $.ajax({
-                    url: "/Votes/DeleteVote",
-                    type: 'POST',
-                    data: {
-                        voteDeletedViewModel: { VoteType: upvoteValue, CommentId: commentId }
-                    },
-                    success:
-                        function (response) {
-                            response = JSON.parse(response);
-                            upvoteCountLabel.innerText = response.countUpvotes;
-                            downvoteCountLabel.innerText = response.countDownvotes;
-                            document.getElementById("upvoteCommentButton" + commentId.toString()).classList.remove("upvoteButtonActive");
+                if (response) {
+                    $.ajax({
+                        url: "/Votes/DeleteVote",
+                        type: 'POST',
+                        data: {
+                            voteDeletedViewModel: { VoteType: upvoteValue, CommentId: commentId }
                         },
-                    error:
-                        function (response) {
-                            alert(response);
-                        }
+                        success:
+                            function (response) {
+                                response = JSON.parse(response);
+                                upvoteCountLabel.innerText = response.countUpvotes;
+                                downvoteCountLabel.innerText = response.countDownvotes;
+                                document.getElementById("upvoteCommentButton" + commentId.toString()).classList.remove("upvoteButtonActive");
+                            },
+                        error:
+                            function (response) {
+                                alert(response);
+                            }
 
-                });
+                    });
+                }
+                else {
+                    $.ajax({
+                        url: "/Votes/AddVote",
+                        type: 'POST',
+                        data: {
+                            voteAddedViewModel: { VoteType: upvoteValue, CommentId: commentId }
+                        },
+                        success:
+                            function (response) {
+                                response = JSON.parse(response);
+                                upvoteCountLabel.innerText = response.countUpvotes;
+                                downvoteCountLabel.innerText = response.countDownvotes;
+                                document.getElementById("upvoteCommentButton" + commentId.toString()).classList.add("upvoteButtonActive");
+                                document.getElementById("downvoteCommentButton" + commentId.toString()).classList.remove("downvoteButtonActive");
+                            },
+                        error:
+                            function (response) {
+                                alert(response);
+                            }
+
+                    });
+                }
             },
         error:
             function (response) {
-                $.ajax({
-                    url: "/Votes/AddVote",
-                    type: 'POST',
-                    data: {
-                        voteAddedViewModel: { VoteType: upvoteValue, CommentId: commentId }
-                    },
-                    success:
-                        function (response) {
-                            response = JSON.parse(response);
-                            upvoteCountLabel.innerText = response.countUpvotes;
-                            downvoteCountLabel.innerText = response.countDownvotes;
-                            document.getElementById("upvoteCommentButton" + commentId.toString()).classList.add("upvoteButtonActive");
-                            document.getElementById("downvoteCommentButton" + commentId.toString()).classList.remove("downvoteButtonActive");
-                        },
-                    error:
-                        function (response) {
-                            alert(response);
-                        }
-
-                });
+                alert(response);
             }
     });
 }
@@ -187,48 +202,53 @@ function DownvoteClickForComment(upvoteCountLabel, downvoteCountLabel, commentId
         },
         success:
             function (response) {
-                $.ajax({
-                    url: "/Votes/DeleteVote",
-                    type: 'POST',
-                    data: {
-                        voteDeletedViewModel: { VoteType: downvoteValue, CommentId: commentId }
-                    },
-                    success:
-                        function (response) {
-                            response = JSON.parse(response);
-                            upvoteCountLabel.innerText = response.countUpvotes;
-                            downvoteCountLabel.innerText = response.countDownvotes;
-                            document.getElementById("downvoteCommentButton" + commentId.toString()).classList.remove("downvoteButtonActive");
+                if (response) {
+                    $.ajax({
+                        url: "/Votes/DeleteVote",
+                        type: 'POST',
+                        data: {
+                            voteDeletedViewModel: { VoteType: downvoteValue, CommentId: commentId }
                         },
-                    error:
-                        function (response) {
-                            alert(response);
-                        }
+                        success:
+                            function (response) {
+                                response = JSON.parse(response);
+                                upvoteCountLabel.innerText = response.countUpvotes;
+                                downvoteCountLabel.innerText = response.countDownvotes;
+                                document.getElementById("downvoteCommentButton" + commentId.toString()).classList.remove("downvoteButtonActive");
+                            },
+                        error:
+                            function (response) {
+                                alert(response);
+                            }
 
-                });
+                    });
+                }
+                else {
+                    $.ajax({
+                        url: "/Votes/AddVote",
+                        type: 'POST',
+                        data: {
+                            voteAddedViewModel: { VoteType: downvoteValue, CommentId: commentId }
+                        },
+                        success:
+                            function (response) {
+                                response = JSON.parse(response);
+                                upvoteCountLabel.innerText = response.countUpvotes;
+                                downvoteCountLabel.innerText = response.countDownvotes;
+                                document.getElementById("downvoteCommentButton" + commentId.toString()).classList.add("downvoteButtonActive");
+                                document.getElementById("upvoteCommentButton" + commentId.toString()).classList.remove("upvoteButtonActive");
+                            },
+                        error:
+                            function (response) {
+                                alert(response);
+                            }
+
+                    });
+                }
             },
         error:
             function (response) {
-                $.ajax({
-                    url: "/Votes/AddVote",
-                    type: 'POST',
-                    data: {
-                        voteAddedViewModel: { VoteType: downvoteValue, CommentId: commentId }
-                    },
-                    success:
-                        function (response) {
-                            response = JSON.parse(response);
-                            upvoteCountLabel.innerText = response.countUpvotes;
-                            downvoteCountLabel.innerText = response.countDownvotes;
-                            document.getElementById("downvoteCommentButton" + commentId.toString()).classList.add("downvoteButtonActive");
-                            document.getElementById("upvoteCommentButton" + commentId.toString()).classList.remove("upvoteButtonActive");
-                        },
-                    error:
-                        function (response) {
-                            alert(response);
-                        }
-
-                });
+                alert(response);
             }
     });
 }

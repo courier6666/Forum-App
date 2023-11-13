@@ -146,13 +146,21 @@ namespace ForumWebApp.Controllers
         public async Task<IActionResult> CheckCommentVoted(int commentId, VoteType voteType)
         {
             var vote = await _voteRepository.GetVoteByUserAndComment(_httpContextAccessor?.HttpContext?.User?.GetUserId(), commentId);
-            return (vote != null && vote.VoteType == voteType) ? Json("Success") : BadRequest("Failure");
+            if(vote == null)
+            {
+                return Json(false);
+            }
+            return Json(vote.VoteType == voteType);
         }
         [HttpPost]
         public async Task<IActionResult> CheckPostVoted(int postId, VoteType voteType)
         {
             var vote = await _voteRepository.GetVoteByUserAndPost(_httpContextAccessor?.HttpContext?.User?.GetUserId(), postId);
-            return (vote != null && vote.VoteType == voteType) ? Json("Success") : BadRequest("Failure");
+            if (vote == null)
+            {
+                return Json(false);
+            }
+            return Json(vote.VoteType == voteType);
         }
         [HttpPost]
         public async Task<IActionResult> GetVoteTypeOfVoteOfUserForPost(int postId)
