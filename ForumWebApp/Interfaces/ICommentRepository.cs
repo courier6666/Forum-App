@@ -8,5 +8,6 @@ namespace ForumWebApp.Interfaces
     {
         Task<IEnumerable<Comment>> GetAllCommentsByPostId(int postId);
         Task<Comment> GetByIdNoTracking(int commentId);
+        Task<IEnumerable<Comment>> GetRepliesOfCommentById(int id);
     }
 }

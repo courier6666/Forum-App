@@ -53,7 +53,7 @@ namespace ForumWebApp.Controllers
                 return BadRequest("Failed to save comment!");
             }
 
-            return Json(CommentToJson(comment));
+            return Json(CommentToJsonWithRepliesCount(comment));
         }
         [HttpPost]
         public async Task<IActionResult> DeleteComment(int commentId)
@@ -70,6 +70,26 @@ namespace ForumWebApp.Controllers
                 return BadRequest("Failed to delete comment!");
             }
             return Json("Success");
+        }
+        [HttpPost]
+        public async Task<IActionResult> GetComment(int commentId)
+        {
+            var comment = await _commentRepository.GetByIdNoTracking(commentId);
+            if(comment == null)
+            {
+                return BadRequest("No comment with such id!");
+            }
+            return Json(CommentToJsonWithRepliesCount(comment));
+        }
+        [HttpPost]
+        public async Task<IActionResult> GetCommentReplies(int commentId)
+        {
+            var replies = await _commentRepository.GetRepliesOfCommentById(commentId);
+            if(replies == null || !replies.Any())
+            {
+                return BadRequest("No replies with such id!");
+            }
+            return Json(CommentsToJsonWithRepliesCount(replies));
         }
     }
 }

@@ -28,7 +28,7 @@ function UpvoteClickForPost() {
                             response = JSON.parse(response);
                             upvoteCountLabel.innerText = response.countUpvotes;
                             downvoteCountLabel.innerText = response.countDownvotes;
-                            document.getElementById("upvotePostButton").className = "";
+                            document.getElementById("upvotePostButton").classList.remove("upvoteButtonActive");
                         },
                     error:
                         function (response) {
@@ -50,8 +50,8 @@ function UpvoteClickForPost() {
                             response = JSON.parse(response);
                             upvoteCountLabel.innerText = response.countUpvotes;
                             downvoteCountLabel.innerText = response.countDownvotes;
-                            document.getElementById("upvotePostButton").className = "upvoteButtonActive";
-                            document.getElementById("downvotePostButton").className = "";
+                            document.getElementById("upvotePostButton").classList.add("upvoteButtonActive");
+                            document.getElementById("downvotePostButton").classList.remove("downvoteButtonActive");
                         },
                     error:
                         function (response) {
@@ -88,7 +88,7 @@ function DownvoteClickForPost() {
                             response = JSON.parse(response);
                             upvoteCountLabel.innerText = response.countUpvotes;
                             downvoteCountLabel.innerText = response.countDownvotes;
-                            document.getElementById("downvotePostButton").className = "";
+                            document.getElementById("downvotePostButton").classList.remove("downvoteButtonActive");
                         },
                     error:
                         function (response) {
@@ -110,8 +110,8 @@ function DownvoteClickForPost() {
                             response = JSON.parse(response);
                             upvoteCountLabel.innerText = response.countUpvotes;
                             downvoteCountLabel.innerText = response.countDownvotes;
-                            document.getElementById("downvotePostButton").className = "downvoteButtonActive";
-                            document.getElementById("upvotePostButton").className = "";
+                            document.getElementById("downvotePostButton").classList.add("downvoteButtonActive");
+                            document.getElementById("upvotePostButton").classList.remove("upvoteButtonActive");
                         },
                     error:
                         function (response) {
@@ -143,7 +143,7 @@ function UpvoteClickForComment(upvoteCountLabel, downvoteCountLabel, commentId) 
                             response = JSON.parse(response);
                             upvoteCountLabel.innerText = response.countUpvotes;
                             downvoteCountLabel.innerText = response.countDownvotes;
-                            document.getElementById("upvoteCommentButton" + commentId.toString()).className = "";
+                            document.getElementById("upvoteCommentButton" + commentId.toString()).classList.remove("upvoteButtonActive");
                         },
                     error:
                         function (response) {
@@ -165,8 +165,8 @@ function UpvoteClickForComment(upvoteCountLabel, downvoteCountLabel, commentId) 
                             response = JSON.parse(response);
                             upvoteCountLabel.innerText = response.countUpvotes;
                             downvoteCountLabel.innerText = response.countDownvotes;
-                            document.getElementById("upvoteCommentButton" + commentId.toString()).className = "upvoteButtonActive";
-                            document.getElementById("downvoteCommentButton" + commentId.toString()).className = "";
+                            document.getElementById("upvoteCommentButton" + commentId.toString()).classList.add("upvoteButtonActive");
+                            document.getElementById("downvoteCommentButton" + commentId.toString()).classList.remove("downvoteButtonActive");
                         },
                     error:
                         function (response) {
@@ -198,7 +198,7 @@ function DownvoteClickForComment(upvoteCountLabel, downvoteCountLabel, commentId
                             response = JSON.parse(response);
                             upvoteCountLabel.innerText = response.countUpvotes;
                             downvoteCountLabel.innerText = response.countDownvotes;
-                            document.getElementById("downvoteCommentButton" + commentId.toString()).className = "";
+                            document.getElementById("downvoteCommentButton" + commentId.toString()).classList.remove("downvoteButtonActive");
                         },
                     error:
                         function (response) {
@@ -220,8 +220,8 @@ function DownvoteClickForComment(upvoteCountLabel, downvoteCountLabel, commentId
                             response = JSON.parse(response);
                             upvoteCountLabel.innerText = response.countUpvotes;
                             downvoteCountLabel.innerText = response.countDownvotes;
-                            document.getElementById("downvoteCommentButton" + commentId.toString()).className = "downvoteButtonActive";
-                            document.getElementById("upvoteCommentButton" + commentId.toString()).className = "";
+                            document.getElementById("downvoteCommentButton" + commentId.toString()).classList.add("downvoteButtonActive");
+                            document.getElementById("upvoteCommentButton" + commentId.toString()).classList.remove("upvoteButtonActive");
                         },
                     error:
                         function (response) {
@@ -244,10 +244,10 @@ function SetVotePostButtonsState() {
             function (response) {
                 response = JSON.parse(response);
                 if (response.voteType == upvoteValue) {
-                    document.getElementById("upvotePostButton").className = "upvoteButtonActive";
+                    document.getElementById("upvotePostButton").classList.add("upvoteButtonActive");
                 }
                 else {
-                    document.getElementById("downvotePostButton").className = "downvoteButtonActive";
+                    document.getElementById("downvotePostButton").classList.add("downvoteButtonActive");
                 }
             },
         error:
@@ -370,14 +370,12 @@ function RenderComment(comment, offset, parentCommentHtml) {
             success:
                 function (response) {
                     response = JSON.parse(response);
-                    console.log(response);
                     if (response.voteType == upvoteValue) {
-                        upvoteButton.className = "upvoteButtonActive";
+                        upvoteButton.classList.add("upvoteButtonActive");
                     }
                     else {
-                        downvoteButton.className = "downvoteButtonActive";
+                        downvoteButton.classList.add("downvoteButtonActive");
                     }
-                    console.log("sdsd");
                 },
             error:
                 function (response) {
@@ -396,24 +394,40 @@ function RenderComment(comment, offset, parentCommentHtml) {
     let repliesHtml = null;
     commentHtml.dataset.repliesCount = 0;
 
-    if (comment.Replies != null) {
+    if (comment.Replies != 0) {
         let viewRepliesLink = document.createElement("a");
         viewRepliesLink.href = "#";
         viewRepliesLink.innerText = "View Replies";
         viewRepliesLink.className = "repliesViewLink";
         commentHtml.append(viewRepliesLink);
 
-        commentHtml.dataset.repliesCount = comment.Replies.length;
+        commentHtml.dataset.repliesCount = comment.Replies;
 
         viewRepliesLink.addEventListener("click", function () {
             if (repliesHtml == null) {
                 repliesHtml = document.createElement("div");
                 repliesHtml.className = "repliesDiv";
-                for (let i = 0; i < comment.Replies.length; ++i) {
-                    let htmlReply = RenderComment(comment.Replies[i], offset + 5, commentHtml);
-                    repliesHtml.append(htmlReply);
-                }
-                repliesHtml.style.display = "block";
+                $.ajax({
+                    url: "/Comment/GetCommentReplies",
+                    type: 'POST',
+                    data: {
+                        commentId: comment.Id
+                    },
+                    success: function (response) {
+                        response = JSON.parse(response);
+                        for (let i = 0; i < response.length; ++i) {
+                            let htmlReply = RenderComment(response[i], offset + 5, commentHtml);
+                            repliesHtml.append(htmlReply);
+                        }
+                        repliesHtml.style.display = "block";
+                        commentHtml.append(repliesHtml);
+                    },
+
+                    error: function (response) {
+                        alert(response);
+                    }
+
+                });
                 return;
             }
             if (repliesHtml.style.display == "none") {
@@ -423,8 +437,6 @@ function RenderComment(comment, offset, parentCommentHtml) {
                 repliesHtml.style.display = "none";
             }
         });
-        commentHtml.append(repliesHtml);
-
     }
     if (userLoggedIn) {
         buttonSubmitReply.onclick = function () {
@@ -480,10 +492,33 @@ function submitReplyForComment(commentId, commentHtml, offset) {
                     viewRepliesLink.className = "repliesViewLink";
                     commentHtml.append(viewRepliesLink);
 
-                    repliesDivHtml = document.createElement("div");
-                    repliesDivHtml.className = "repliesDiv";
-
                     viewRepliesLink.addEventListener("click", function () {
+                        if (repliesDivHtml == null) {
+                            repliesDivHtml = document.createElement("div");
+                            repliesDivHtml.className = "repliesDiv";
+                            $.ajax({
+                                url: "/Comment/GetCommentReplies",
+                                type: 'POST',
+                                data: {
+                                    commentId: comment.Id
+                                },
+                                success: function (response) {
+                                    response = JSON.parse(response);
+                                    for (let i = 0; i < response.length; ++i) {
+                                        let htmlReply = RenderComment(response[i], offset + 5, commentHtml);
+                                        repliesHtml.append(htmlReply);
+                                    }
+                                    repliesDivHtml.style.display = "block";
+                                    commentHtml.append(repliesDivHtml);
+                                },
+
+                                error: function (response) {
+                                    alert(response);
+                                }
+
+                            });
+                            return;
+                        }
                         if (repliesDivHtml.style.display == "none") {
                             repliesDivHtml.style.display = "block";
                         }
@@ -494,8 +529,11 @@ function submitReplyForComment(commentId, commentHtml, offset) {
                     repliesDivHtml.style.display = "block";
                     commentHtml.append(repliesDivHtml);
                 }
+                else {
+                    repliesDivHtml.append(renderedCommentHtml);
+                }
                 ++commentHtml.dataset.repliesCount;
-                repliesDivHtml.append(renderedCommentHtml);
+                
             },
         error:
             function (response) {
@@ -531,6 +569,7 @@ function deleteComment(commentIdArg, commentHtml, parentCommentHtml) {
 
     });
 }
+
 let toViewCommentInputButton = document.getElementById("commentLink");
 if (toViewCommentInputButton != null) {
     toViewCommentInputButton.addEventListener("click", function () {

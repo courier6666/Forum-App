@@ -26,12 +26,18 @@
     color: red;
 }
 
-.upvoteButtonActive
+.upvoteButton
 {
+    border-radius: 10px;
+}
+.downvoteButton {
+    border-radius: 10px;
+}
+
+.upvoteButtonActive {
     background-color: green;
 }
 
-.downvoteButtonActive
-{
+.downvoteButtonActive {
     background-color: red;
 }

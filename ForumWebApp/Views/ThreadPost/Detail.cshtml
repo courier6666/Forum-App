@@ -63,7 +63,7 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        const commentsData = @Html.Raw(CommentsToJson(Model.Post.Comments));
+        const commentsData = @Html.Raw(CommentsToJsonWithRepliesCount(Model.Post.Comments));
         const globalCommentsContainer = document.getElementById("commentsContainer");
         const userLoggedIn = @Json.Serialize(Model.HttpContextAccessor.HttpContext?.User.GetUserId() != null);
         const userId = @Json.Serialize(Model.HttpContextAccessor.HttpContext?.User.GetUserId());

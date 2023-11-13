@@ -46,7 +46,11 @@ namespace ForumWebApp.Repositories
 
         public async Task<Comment> GetByIdAsync(int id)
         {
-            return await _context.Comments.Include(c => c.Replies).FirstOrDefaultAsync(c => c.Id == id);
+            return await _context.Comments.Include(c => c.Replies).Include(c=>c.Author).FirstOrDefaultAsync(c => c.Id == id);
+        }
+        public async Task<IEnumerable<Comment>> GetRepliesOfCommentById(int id)
+        {
+            return await _context.Comments.Where(c => c.ParentCommentId == id).Include(c => c.Replies).Include(c=>c.Votes).Include(c=>c.Author).ToListAsync();
         }
 
         public bool Save()

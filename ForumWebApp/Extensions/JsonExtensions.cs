@@ -2,32 +2,71 @@
 using System.Security.Policy;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Xml.Linq;
 
 namespace ForumWebApp.Extensions
 {
     public static class JsonExtension
     {
-        public static string CommentsToJson(IEnumerable<Comment> comments)
+        public static string CommentsToJsonRepliesIncluded(IEnumerable<Comment> comments)
         {
             string jsonResult = "[";
 
             foreach (var comment in comments) 
             {
-                jsonResult += CommentToJson(comment);
+                jsonResult += CommentToJsonRepliesIncluded(comment);
                 jsonResult += ",";
             }
             jsonResult = jsonResult.Trim(' ').Trim(',');
             jsonResult += "]";
             return jsonResult;
         }
-        public static string CommentToJson(Comment comment)
+        public static string CommentsToJsonWithRepliesCount(IEnumerable<Comment> comments)
+        {
+            string jsonResult = "[";
+
+            foreach (var comment in comments)
+            {
+                jsonResult += CommentToJsonWithRepliesCount(comment);
+                jsonResult += ",";
+            }
+            jsonResult = jsonResult.Trim(' ').Trim(',');
+            jsonResult += "]";
+            return jsonResult;
+        }
+        public static string CommentToJsonWithRepliesCount(Comment comment)
+        {
+            string jsonResult = "{";
+            jsonResult += $"\"Id\": {comment.Id}, ";
+            jsonResult += $"\"Content\": \"{comment.Content}\", ";
+            jsonResult += $"\"Replies\":";
+            if (comment.Replies != null && comment.Replies.Any())
+                jsonResult += comment.Replies.Count.ToString();
+            else
+                jsonResult += "0";
+            jsonResult += ",";
+            jsonResult += $"\"Author\":";
+
+            if (comment.Author != null)
+                jsonResult += UserToJson(comment.Author);
+            else
+                jsonResult += "null";
+            jsonResult += ",";
+
+            jsonResult += "\"Votes\": ";
+            jsonResult += VotesToJson(comment.Votes);
+
+            jsonResult += "}";
+            return jsonResult;
+        }
+        public static string CommentToJsonRepliesIncluded(Comment comment)
         {
             string jsonResult = "{";
             jsonResult += $"\"Id\": {comment.Id}, ";
             jsonResult += $"\"Content\": \"{comment.Content}\", ";
             jsonResult += $"\"Replies\":";
             if(comment.Replies != null && comment.Replies.Any())
-                jsonResult += CommentsToJson(comment.Replies);
+                jsonResult += CommentsToJsonRepliesIncluded(comment.Replies);
             else 
                 jsonResult += "null";
             jsonResult += ",";
