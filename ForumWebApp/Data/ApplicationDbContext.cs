@@ -21,6 +21,7 @@ namespace ForumWebApp.Data
         public DbSet<ThreadPost> ThreadPosts { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Vote> Votes { get; set; }
+        public DbSet<ForumThreadUserFollow> ForumThreadUserFollows { get; set; }
         public bool ClearAllData()
         {
             ForumThreads.ClearDbSet();

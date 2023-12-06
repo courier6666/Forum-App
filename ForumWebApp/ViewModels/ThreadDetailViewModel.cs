@@ -9,5 +9,7 @@ namespace ForumWebApp.ViewModels
         public string Title { get; set;}
         public string Description { get; set;}
         public ICollection<ThreadPost> Posts { get; set;}
+        public int NumberOfFollowers { get; set; }
+        public bool IsFollowing { get; set; }
     }
 }

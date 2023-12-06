@@ -29,9 +29,7 @@ namespace ForumWebApp.Repositories
 
         public async Task<IEnumerable<ForumThread>> GetAllAsync()
         {
-            var threads =  await _context.ForumThreads.
-                Include(thread => thread.Posts).
-                ThenInclude(post=> post.Comments).ToListAsync();
+            var threads =  await _context.ForumThreads.Include(t=>t.Posts).ToListAsync();
 
             foreach(var thread in threads)
             {
@@ -79,6 +77,25 @@ namespace ForumWebApp.Repositories
         {
             _context.Update(entity);
             return Save();
+        }
+
+        public async Task<IEnumerable<ForumThread>> GetAllThreadsFollowedByUser(string userId)
+        {
+            var follows = await _context.ForumThreadUserFollows.Where(f => f.UserId == userId).Select(f => f.ForumThreadId).ToListAsync();
+            var threads = await _context.ForumThreads.Where(t => follows.Contains(t.Id)).ToListAsync();
+            return threads;
+        }
+
+        public async Task<int> GetAllThreadsCountFollowedByUser(string userId)
+        {
+            var follows = await _context.ForumThreadUserFollows.Where(f => f.UserId == userId).Select(f => f.ForumThreadId).ToListAsync();
+            return (follows != null) ? follows.Count() : 0;
+        }
+
+        public async Task<bool> IsThreadFollowedByUser(int threadId, string userId)
+        {
+            var follows = await _context.ForumThreadUserFollows.FirstOrDefaultAsync(f => (f.UserId == userId && f.ForumThreadId == threadId));
+            return follows != null;
         }
     }
 }

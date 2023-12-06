@@ -21,6 +21,7 @@ namespace ForumWebApp.Controllers
             var thread = await _forumThreadRepository.GetByIdAsync(id);
 
             var sortedPosts = thread.Posts.OrderByDescending(p => p.CreateAtUtc).ToList();
+            var numberOfFollowers = 
 
             var viewModelThread = new ThreadDetailViewModel
             {
@@ -28,6 +29,7 @@ namespace ForumWebApp.Controllers
                 Title = thread.Title,
                 Description = thread.Description,
                 Posts = sortedPosts
+                
 
             };
             return View(viewModelThread);

@@ -1,10 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using ForumWebApp.Interfaces.Observer;
 
 namespace ForumWebApp.Models
 {
     public class ForumThread
-    {
+    { 
         [Key]
         public int Id { get; set; }
         public string Title { get; set; }
@@ -13,5 +14,6 @@ namespace ForumWebApp.Models
         [ForeignKey("AppUser")]
         public string? AuthorId { get; set; }
         public AppUser Author { get; set; }
+
     }
 }

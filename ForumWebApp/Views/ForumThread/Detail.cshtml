@@ -9,6 +9,12 @@
 <h1>@Model.Title</h1>
 <h2>@Model.Description</h2>
 
+<div class="container">
+    <label>@Model.NumberOfFollowers</label>
+    <a type="button" class="btn btn-dark" asp-action="Follow" asp-controller="ForumThread" asp-route-threadId="@Model.Id">Follow</a>
+</div>
+
+
 <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
 <div class="container">
     @foreach (var post in Model.Posts)
