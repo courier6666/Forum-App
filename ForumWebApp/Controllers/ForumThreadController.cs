@@ -31,7 +31,7 @@ namespace ForumWebApp.Controllers
             var sortedPosts = thread.Posts.OrderByDescending(p => p.CreateAtUtc).ToList();
             var numberOfFollowers = await _userRepository.GetAllFollowersCountOfForumThread(id);
             var currentUserId = _httpContextAccessor?.HttpContext?.User?.GetUserId();
-            var isFollowed = (currentUserId != null) ? await _forumThreadRepository.GetFollowThreadByUser(id, currentUserId) != null : false;
+            var isFollowing = (currentUserId != null) ? await _forumThreadRepository.GetFollowThreadByUser(id, currentUserId) != null : false;
 
             var viewModelThread = new ThreadDetailViewModel
             {
@@ -40,8 +40,8 @@ namespace ForumWebApp.Controllers
                 Description = thread.Description,
                 Posts = sortedPosts,
                 NumberOfFollowers = numberOfFollowers,
-                IsFollowing = isFollowed,
-                IsUserLoggedIn = currentUserId != null
+                IsFollowing = isFollowing,
+                IsUserLoggedIn = User.Identity.IsAuthenticated
 
             };
             return View(viewModelThread);

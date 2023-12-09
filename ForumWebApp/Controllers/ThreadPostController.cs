@@ -3,7 +3,7 @@ using ForumWebApp.Models;
 using ForumWebApp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
-using ForumWebApp.Extensions;
+using Microsoft.AspNetCore;
 using ForumWebApp.Extensions;
 
 namespace ForumWebApp.Controllers
@@ -22,6 +22,16 @@ namespace ForumWebApp.Controllers
         {
             var posts = await _threadPostRepository.GetPostsByThreadIdAsync(threadId);
             return View(posts);
+        }
+        public async Task<IActionResult> RecentPosts()
+        {
+            var userId = _httpContextAccessor.HttpContext?.User?.GetUserId();
+            var recentPosts = await _threadPostRepository.GetAllPostsFromThreadsFollowedByUserWithinTimePeriod(userId, new TimeSpan(0), new TimeSpan(90,0,0,0));
+            var recentPostsViewModel = new RecentPostsViewModel
+            {
+                RecentPosts = recentPosts.ToList()
+            };
+            return View(recentPostsViewModel);
         }
         public async Task<IActionResult> Detail(int threadId, int postId)
         {

@@ -1,10 +1,12 @@
-﻿using AspNetCore;
+﻿
 using ForumWebApp.Data;
 using ForumWebApp.Interfaces;
 using ForumWebApp.Models;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Xml.Linq;
+using ForumWebApp.ViewModels;
 
 namespace ForumWebApp.Repositories
 {
@@ -79,12 +81,15 @@ namespace ForumWebApp.Repositories
                 ToListAsync();
 
             if (followedThreads == null) return null;
-
             var followedThreadsSet = new HashSet<int>(followedThreads);
 
-            var posts = await _context.ThreadPosts.Where(p => p.ThreadId != null && followedThreadsSet.Contains((int)p.ThreadId)).
-                Where(p => (DateTime.Now - p.CreateAtUtc) >= start && (DateTime.Now - p.CreateAtUtc) <= end).
+            var posts = await _context.ThreadPosts.
+                Where(p => p.ThreadId != null && followedThreadsSet.Contains((int)p.ThreadId)).
                 ToListAsync();
+
+            var currentTime = DateTime.Now;
+            posts = posts.Where(p => ((currentTime - p.CreateAtUtc) > start && (currentTime - p.CreateAtUtc) <= end)).
+                OrderBy(p => p.CreateAtUtc).ToList();
 
             return posts;
         }
