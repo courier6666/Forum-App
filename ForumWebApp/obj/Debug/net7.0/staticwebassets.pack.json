@@ -17,6 +17,10 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "D:\\Projects\\ForumWebApp\\ForumWebApp\\wwwroot\\js\\forumThread\\forumThreadDetail.js",
+      "PackagePath": "staticwebassets\\js\\forumThread\\forumThreadDetail.js"
+    },
+    {
       "Id": "D:\\Projects\\ForumWebApp\\ForumWebApp\\wwwroot\\js\\postThread\\post.js",
       "PackagePath": "staticwebassets\\js\\postThread\\post.js"
     },

@@ -30,7 +30,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 var app = builder.Build();
 
-Seed.SeedData(app);
+//Seed.SeedData(app);
 //Seed.SeedUsersAndRolesAsync(app);
 
 // Configure the HTTP request pipeline.

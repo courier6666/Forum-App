@@ -16,7 +16,5 @@ namespace ForumWebApp.Models
         public ICollection<Comment> Comments { get; set; }
         public ICollection<Vote> Votes { get; set; }
         public string? ProfileImageUrl { get; set; }
-        public ICollection<ForumThread> FollowedThreads { get; set; }
-
     }
 }

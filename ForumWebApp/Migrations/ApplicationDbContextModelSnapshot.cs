@@ -149,6 +149,25 @@ namespace ForumWebApp.Migrations
                     b.ToTable("ForumThreads");
                 });
 
+            modelBuilder.Entity("ForumWebApp.Models.ForumThreadUserFollow", b =>
+                {
+                    b.Property<int>("ForumThreadId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasIndex("ForumThreadId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ForumThreadUserFollows");
+                });
+
             modelBuilder.Entity("ForumWebApp.Models.ThreadPost", b =>
                 {
                     b.Property<int>("Id")
@@ -376,6 +395,25 @@ namespace ForumWebApp.Migrations
                         .HasForeignKey("AuthorId");
 
                     b.Navigation("Author");
+                });
+
+            modelBuilder.Entity("ForumWebApp.Models.ForumThreadUserFollow", b =>
+                {
+                    b.HasOne("ForumWebApp.Models.ForumThread", "ForumThread")
+                        .WithMany()
+                        .HasForeignKey("ForumThreadId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ForumWebApp.Models.AppUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ForumThread");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ForumWebApp.Models.ThreadPost", b =>

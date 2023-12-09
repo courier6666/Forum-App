@@ -1,7 +1,9 @@
-﻿using ForumWebApp.Data;
+﻿using AspNetCore;
+using ForumWebApp.Data;
 using ForumWebApp.Interfaces;
 using ForumWebApp.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Xml.Linq;
 
 namespace ForumWebApp.Repositories
@@ -67,6 +69,24 @@ namespace ForumWebApp.Repositories
         {
             _context.Update(entity);
             return Save();
+        }
+        
+        public async Task<IEnumerable<ThreadPost>> GetAllPostsFromThreadsFollowedByUserWithinTimePeriod(string userId, TimeSpan start, TimeSpan end)
+        {
+            var followedThreads = await _context.ForumThreadUserFollows.
+                Where(f=>f.UserId == userId).
+                Select(f=>f.ForumThreadId).
+                ToListAsync();
+
+            if (followedThreads == null) return null;
+
+            var followedThreadsSet = new HashSet<int>(followedThreads);
+
+            var posts = await _context.ThreadPosts.Where(p => p.ThreadId != null && followedThreadsSet.Contains((int)p.ThreadId)).
+                Where(p => (DateTime.Now - p.CreateAtUtc) >= start && (DateTime.Now - p.CreateAtUtc) <= end).
+                ToListAsync();
+
+            return posts;
         }
     }
 }

@@ -25,7 +25,6 @@
     <Folder Include="Abstracts\" />
     <Folder Include="Migrations\" />
     <Folder Include="Views\User\" />
-    <Folder Include="wwwroot\js\forumThread\" />
   </ItemGroup>
 
 </Project>

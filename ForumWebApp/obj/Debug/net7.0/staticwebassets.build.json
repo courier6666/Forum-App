@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "+muDQg9PdWRVq0XVfY8+grxZo9nezsdWRRnxv5CIBLc=",
+  "Hash": "NJxDpTcPqWOtt5w5TRx77pvw5MFLbciwMBo01cVF11o=",
   "Source": "ForumWebApp",
   "BasePath": "_content/ForumWebApp",
   "Mode": "Default",
@@ -100,6 +100,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "D:\\Projects\\ForumWebApp\\ForumWebApp\\wwwroot\\js\\forumThread\\forumThreadDetail.js",
+      "SourceId": "ForumWebApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\ForumWebApp\\ForumWebApp\\wwwroot\\",
+      "BasePath": "_content/ForumWebApp",
+      "RelativePath": "js/forumThread/forumThreadDetail.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\forumThread\\forumThreadDetail.js"
     },
     {
       "Identity": "D:\\Projects\\ForumWebApp\\ForumWebApp\\wwwroot\\js\\postThread\\post.js",

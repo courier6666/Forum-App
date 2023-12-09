@@ -29,7 +29,8 @@ namespace ForumWebApp.Repositories
 
         public async Task<IEnumerable<ForumThread>> GetAllAsync()
         {
-            var threads =  await _context.ForumThreads.Include(t=>t.Posts).ToListAsync();
+            var threads =  await _context.ForumThreads.Include(t=>t.Posts).
+                ThenInclude(p=>p.Comments).Include(t=>t.Posts).ThenInclude(p=>p.Author).ToListAsync();
 
             foreach(var thread in threads)
             {
@@ -92,10 +93,23 @@ namespace ForumWebApp.Repositories
             return (follows != null) ? follows.Count() : 0;
         }
 
-        public async Task<bool> IsThreadFollowedByUser(int threadId, string userId)
+
+        public bool AddFollowForThreadByUser(ForumThreadUserFollow userThreadFollow)
         {
-            var follows = await _context.ForumThreadUserFollows.FirstOrDefaultAsync(f => (f.UserId == userId && f.ForumThreadId == threadId));
-            return follows != null;
+            _context.Add(userThreadFollow);
+            return Save();
+        }
+
+        public async Task<ForumThreadUserFollow> GetFollowThreadByUser(int threadId, string userId)
+        {
+            var follow = await _context.ForumThreadUserFollows.FirstOrDefaultAsync(f=>f.ForumThreadId == threadId && f.UserId == userId);
+            return follow;
+        }
+
+        public bool DeleteFollowForThreadByUser(ForumThreadUserFollow userThreadFollow)
+        {
+            _context.Remove(userThreadFollow);
+            return Save();
         }
     }
 }

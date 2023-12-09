@@ -11,5 +11,6 @@ namespace ForumWebApp.ViewModels
         public ICollection<ThreadPost> Posts { get; set;}
         public int NumberOfFollowers { get; set; }
         public bool IsFollowing { get; set; }
+        public bool IsUserLoggedIn { get; set; }
     }
 }

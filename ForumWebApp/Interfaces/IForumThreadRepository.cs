@@ -6,6 +6,8 @@ namespace ForumWebApp.Interfaces
     {
         public Task<IEnumerable<ForumThread>> GetAllThreadsFollowedByUser(string userId);
         public Task<int> GetAllThreadsCountFollowedByUser(string userId);
-        public Task<bool> IsThreadFollowedByUser(int threadId, string userId);
+        public Task<ForumThreadUserFollow> GetFollowThreadByUser(int threadId, string userId);
+        public bool AddFollowForThreadByUser(ForumThreadUserFollow userThreadFollow);
+        public bool DeleteFollowForThreadByUser(ForumThreadUserFollow userThreadFollow);
     }
 }
