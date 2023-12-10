@@ -4,6 +4,6 @@ namespace ForumWebApp.ViewModels
 {
     public class RecentPostsViewModel
     {
-        public ICollection<ThreadPost> RecentPosts { get; set; }
+        public ICollection<(string, ICollection<ThreadPost>)> RecentPostsByEachPeriod { get; set; }
     }
 }

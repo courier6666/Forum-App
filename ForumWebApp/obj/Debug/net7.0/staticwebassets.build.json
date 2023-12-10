@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "NJxDpTcPqWOtt5w5TRx77pvw5MFLbciwMBo01cVF11o=",
+  "Hash": "pwVy9a1IgeKHGRnkFQ93qnpRj0fQP0VKWRwwVrMOr5M=",
   "Source": "ForumWebApp",
   "BasePath": "_content/ForumWebApp",
   "Mode": "Default",
@@ -151,6 +151,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\site.js"
+    },
+    {
+      "Identity": "D:\\Projects\\ForumWebApp\\ForumWebApp\\wwwroot\\js\\utility\\formatDateOfCreationForPosts.js",
+      "SourceId": "ForumWebApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\ForumWebApp\\ForumWebApp\\wwwroot\\",
+      "BasePath": "_content/ForumWebApp",
+      "RelativePath": "js/utility/formatDateOfCreationForPosts.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\utility\\formatDateOfCreationForPosts.js"
     },
     {
       "Identity": "D:\\Projects\\ForumWebApp\\ForumWebApp\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",

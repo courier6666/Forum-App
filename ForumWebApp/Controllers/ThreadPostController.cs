@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore;
 using ForumWebApp.Extensions;
+using ForumWebApp.Data.Enums;
 
 namespace ForumWebApp.Controllers
 {
@@ -26,10 +27,27 @@ namespace ForumWebApp.Controllers
         public async Task<IActionResult> RecentPosts()
         {
             var userId = _httpContextAccessor.HttpContext?.User?.GetUserId();
+
             var recentPosts = await _threadPostRepository.GetAllPostsFromThreadsFollowedByUserWithinTimePeriod(userId, new TimeSpan(0), new TimeSpan(90,0,0,0));
+
+            var postsByEachTimePeriod = new List<(string, ICollection<ThreadPost>)>();
+            var tuple = (WithinTimePeriod.GetTimePeriodNameById(0), 
+                (await _threadPostRepository.GetAllPostsFromThreadsFollowedByUserWithinTimePeriod(userId, new TimeSpan(0), WithinTimePeriod.Day)).
+                ToList());
+            
+            postsByEachTimePeriod.Add(tuple);
+
+            for(int i = 1;i < WithinTimePeriod.PeriodsCount;++i)
+            {
+                tuple = (WithinTimePeriod.GetTimePeriodNameById(i),
+                (await _threadPostRepository.GetAllPostsFromThreadsFollowedByUserWithinTimePeriod(userId, WithinTimePeriod.GetTimePeriodById(i - 1), WithinTimePeriod.GetTimePeriodById(i))).
+                ToList());
+                postsByEachTimePeriod.Add(tuple);
+            }
+
             var recentPostsViewModel = new RecentPostsViewModel
             {
-                RecentPosts = recentPosts.ToList()
+                RecentPostsByEachPeriod = postsByEachTimePeriod
             };
             return View(recentPostsViewModel);
         }
