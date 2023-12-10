@@ -26,9 +26,11 @@ namespace ForumWebApp.Controllers
         }
         public async Task<IActionResult> RecentPosts()
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login","Account");
+            }
             var userId = _httpContextAccessor.HttpContext?.User?.GetUserId();
-
-            var recentPosts = await _threadPostRepository.GetAllPostsFromThreadsFollowedByUserWithinTimePeriod(userId, new TimeSpan(0), new TimeSpan(90,0,0,0));
 
             var postsByEachTimePeriod = new List<(string, ICollection<ThreadPost>)>();
             var tuple = (WithinTimePeriod.GetTimePeriodNameById(0), 
