@@ -41,16 +41,22 @@ namespace ForumWebApp.Repositories
 
         public async Task<IEnumerable<Comment>> GetAllCommentsByPostId(int postId)
         {
-            return await _context.Comments.Where(c => c.PostId == postId).Include(c => c.Replies).ToListAsync();
+            return await _context.Comments.Where(c => c.PostId == postId).
+                Include(c => c.Replies).
+                ToListAsync();
         }
 
         public async Task<Comment> GetByIdAsync(int id)
         {
-            return await _context.Comments.Include(c => c.Replies).Include(c=>c.Author).FirstOrDefaultAsync(c => c.Id == id);
+            return await _context.Comments.Include(c => c.Replies).
+                Include(c=>c.Author).FirstOrDefaultAsync(c => c.Id == id);
         }
         public async Task<IEnumerable<Comment>> GetRepliesOfCommentById(int id)
         {
-            return await _context.Comments.Where(c => c.ParentCommentId == id).Include(c => c.Replies).Include(c=>c.Votes).Include(c=>c.Author).ToListAsync();
+            return await _context.Comments.Where(c => c.ParentCommentId == id).
+                Include(c => c.Replies).
+                Include(c=>c.Votes).Include(c=>c.Author).
+                ToListAsync();
         }
 
         public bool Save()
@@ -66,7 +72,8 @@ namespace ForumWebApp.Repositories
 
         public async Task<Comment> GetByIdNoTracking(int id)
         {
-            return await _context.Comments.Include(c => c.Replies).AsNoTracking().FirstOrDefaultAsync(c => c.Id == id);
+            return await _context.Comments.Include(c => c.Replies).AsNoTracking().
+                FirstOrDefaultAsync(c => c.Id == id);
         }
     }
 }

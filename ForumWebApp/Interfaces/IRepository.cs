@@ -13,6 +13,5 @@ namespace ForumWebApp.Interfaces
     public interface IRepository<TObject, TObjectId> : IRepository<TObject>
     {
         Task<TObject> GetByIdAsync(TObjectId id);
-
     }
 }

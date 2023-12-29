@@ -53,6 +53,8 @@ namespace ForumWebApp.Controllers
             };
             return View(recentPostsViewModel);
         }
+        [HttpPost]
+
         public async Task<IActionResult> Detail(int threadId, int postId)
         {
             var post = await _threadPostRepository.GetByIdAsync(postId);

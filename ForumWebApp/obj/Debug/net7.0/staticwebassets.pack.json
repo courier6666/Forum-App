@@ -21,16 +21,20 @@
       "PackagePath": "staticwebassets\\js\\forumThread\\forumThreadDetail.js"
     },
     {
+      "Id": "D:\\Projects\\ForumWebApp\\ForumWebApp\\wwwroot\\js\\postThread\\formatDateOfCreationForPosts.js",
+      "PackagePath": "staticwebassets\\js\\postThread\\formatDateOfCreationForPosts.js"
+    },
+    {
       "Id": "D:\\Projects\\ForumWebApp\\ForumWebApp\\wwwroot\\js\\postThread\\post.js",
       "PackagePath": "staticwebassets\\js\\postThread\\post.js"
     },
     {
-      "Id": "D:\\Projects\\ForumWebApp\\ForumWebApp\\wwwroot\\js\\site.js",
-      "PackagePath": "staticwebassets\\js\\site.js"
+      "Id": "D:\\Projects\\ForumWebApp\\ForumWebApp\\wwwroot\\js\\postThread\\recentPosts.js",
+      "PackagePath": "staticwebassets\\js\\postThread\\recentPosts.js"
     },
     {
-      "Id": "D:\\Projects\\ForumWebApp\\ForumWebApp\\wwwroot\\js\\utility\\formatDateOfCreationForPosts.js",
-      "PackagePath": "staticwebassets\\js\\utility\\formatDateOfCreationForPosts.js"
+      "Id": "D:\\Projects\\ForumWebApp\\ForumWebApp\\wwwroot\\js\\site.js",
+      "PackagePath": "staticwebassets\\js\\site.js"
     },
     {
       "Id": "D:\\Projects\\ForumWebApp\\ForumWebApp\\wwwroot\\lib\\bootstrap\\LICENSE",

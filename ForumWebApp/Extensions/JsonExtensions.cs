@@ -1,4 +1,5 @@
 ﻿using ForumWebApp.Models;
+using Microsoft.Extensions.Hosting;
 using System.Security.Policy;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -106,6 +107,31 @@ namespace ForumWebApp.Extensions
             jsonResult += "\"Downvotes\":" + $"{downvoteCount}";
             jsonResult += "}";
 
+            return jsonResult;
+        }
+        public static string ThreadPostsToJson(ICollection<ThreadPost> threadPosts)
+        {
+            string jsonResult = "[";
+            foreach(var post in threadPosts)
+            {
+                jsonResult += ThreadPostToJson(post);
+                jsonResult += ",";
+            }
+            jsonResult = jsonResult.Trim(' ').Trim(',');
+            jsonResult += "]";
+            return jsonResult;
+        }
+        public static string ThreadPostToJson(ThreadPost threadPost)
+        {
+            string jsonResult = "{";
+            jsonResult += $"AuthorId: {threadPost.AuthorId}, ";
+            jsonResult += $"AuthorName: {threadPost.Author.UserName},";
+            jsonResult += $"ThreadID: {threadPost.ThreadId},";
+            jsonResult += $"PostId: {threadPost.Id},";
+            jsonResult += $"PostTitle: {threadPost.Title},";
+            jsonResult += $"TotalMillisecondsAfterCreation: {(DateTime.UtcNow - threadPost.CreateAtUtc).TotalMilliseconds}";
+
+            jsonResult += "}";
             return jsonResult;
         }
 

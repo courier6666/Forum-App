@@ -31,13 +31,13 @@ namespace ForumWebApp.Data.Enums
             Month = periods[6];
 
             periodsName = new List<string>() { 
-                "Today",
+                "A Day",
                 "3 Days",
-                "Week",
+                "A Week",
                 "2 Weeks",
                 "3 Weeks",
                 "4 Weeks",
-                "Month"
+                "A Month"
             };
 
         }
